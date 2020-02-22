@@ -1,6 +1,5 @@
 package com.github.arakorno.stackapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,7 +15,6 @@ public class Question {
     private Integer id;
     private List<String> tags;
     private Boolean isAnswered;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private String creationDate;
     private Integer viewCount;
     private Integer answerCount;

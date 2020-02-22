@@ -1,6 +1,7 @@
 package com.github.arakorno.stackapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Data
+@Builder
 @Document(collection = "question")
 public class Question {
     @Id

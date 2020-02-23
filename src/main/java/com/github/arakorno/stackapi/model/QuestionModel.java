@@ -1,7 +1,5 @@
 package com.github.arakorno.stackapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.arakorno.stackapi.converter.EpochToDateSerializer;
@@ -16,18 +14,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class QuestionModel {
+public class QuestionModel implements BaseModel {
     private List<Item> items;
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Item {
+    public static class Item implements BaseModel {
         @JsonProperty("question_id")
         private Integer id;
         @JsonProperty
@@ -49,9 +43,7 @@ public class QuestionModel {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Owner {
+    public static class Owner implements BaseModel {
         @JsonProperty("user_id")
         private Integer userId;
     }

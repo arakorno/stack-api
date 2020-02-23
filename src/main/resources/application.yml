@@ -1,1 +1,14 @@
+api:
+  stackexchange:
+     url: https://api.stackexchange.com/2.2
 
+rest:
+  connect:
+    connection-request-timeout: 20000
+    connect-timeout: 20000
+    read-timeout: 20000
+
+logging:
+  level:
+    com.github.arakorno.stackapi: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG

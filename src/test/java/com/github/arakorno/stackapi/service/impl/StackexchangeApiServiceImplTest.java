@@ -24,9 +24,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class QuestionApiServiceImplTest {
+public class StackexchangeApiServiceImplTest {
     @InjectMocks
-    private QuestionApiServiceImpl service;
+    private StackexchangeApiServiceImpl service;
     @Mock
     private RestTemplate restTemplate;
     @Mock
@@ -42,13 +42,14 @@ public class QuestionApiServiceImplTest {
     @Test
     public void testGetQuestions() {
         QuestionModel response = QuestionModel.builder()
-                .items(List.of(QuestionModel.Item.builder().tags(List.of("java", "mongo")).answerCount(5).build()))
+                .questionItems(List
+                        .of(QuestionModel.QuestionItem.builder().tags(List.of("java", "mongo")).answerCount(5).build()))
                 .build();
         when(restTemplate.exchange(any(URI.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class)))
                 .thenReturn(responseEntity);
         when(responseEntity.getBody()).thenReturn(response);
         QuestionModel res = service.getQuestions();
-        Assert.assertEquals(res.getItems().get(0).getTags().size(), 2);
+        Assert.assertEquals(res.getQuestionItems().get(0).getTags().size(), 2);
 
         when(responseEntity.getBody()).thenReturn(QuestionModel.builder().build());
         exception.expect(InternalServerException.class);

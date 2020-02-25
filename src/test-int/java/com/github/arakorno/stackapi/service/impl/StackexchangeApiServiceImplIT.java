@@ -24,9 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-public class QuestionApiServiceImplIT extends AbstractIntTest {
+public class StackexchangeApiServiceImplIT extends AbstractIntTest {
     @Autowired
-    private QuestionApiServiceImpl service;
+    private StackexchangeApiServiceImpl service;
     @Mock
     private RestTemplate restTemplate;
     @Value("classpath:json/api_response_questions.json")

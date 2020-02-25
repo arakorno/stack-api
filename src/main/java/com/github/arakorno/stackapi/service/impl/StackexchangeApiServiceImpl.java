@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.arakorno.stackapi.exception.InternalServerException;
 import com.github.arakorno.stackapi.model.QuestionModel;
-import com.github.arakorno.stackapi.service.QuestionApiService;
+import com.github.arakorno.stackapi.service.StackexchangeApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class QuestionApiServiceImpl implements QuestionApiService {
+public class StackexchangeApiServiceImpl implements StackexchangeApiService {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     @Value("${api.stackexchange.url}")
     private String apiStackexchangeUrl;
@@ -36,7 +36,7 @@ public class QuestionApiServiceImpl implements QuestionApiService {
         return Optional
                 .ofNullable(restTemplate
                         .exchange(uri, HttpMethod.GET, new HttpEntity(getHeaders()), QuestionModel.class).getBody())
-                .map(this::logJson).filter(c -> Objects.nonNull(c.getItems()))
+                .map(this::logJson).filter(c -> Objects.nonNull(c.getQuestionItems()))
                 .orElseThrow(() -> new InternalServerException("Failed to get data"));
     }
 

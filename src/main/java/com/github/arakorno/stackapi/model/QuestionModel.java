@@ -15,13 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionModel implements BaseModel {
-    private List<Item> items;
+    @JsonProperty("items")
+    private List<QuestionItem> questionItems;
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Item implements BaseModel {
+    public static class QuestionItem implements BaseModel {
         @JsonProperty("question_id")
         private Integer id;
         @JsonProperty

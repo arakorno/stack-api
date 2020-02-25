@@ -4,7 +4,7 @@ import com.github.arakorno.stackapi.model.QuestionModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-public interface QuestionApiService {
+public interface StackexchangeApiService {
     String QUESTION_URL = "/questions/featured";
 
     default HttpHeaders getHeaders() {

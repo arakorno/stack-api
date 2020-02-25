@@ -12,3 +12,8 @@ logging:
   level:
     com.github.arakorno.stackapi: DEBUG
     org.springframework.web.client.RestTemplate: DEBUG
+
+dockerspring:
+  data:
+     mongodb:
+        uri: mongodb://mongo:27000/test

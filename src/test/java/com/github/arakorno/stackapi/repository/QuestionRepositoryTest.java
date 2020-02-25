@@ -29,11 +29,11 @@ class QuestionRepositoryTest {
         Question q3 = Question.builder().id(3).tags(List.of("python", "java")).build();
         Question q4 = Question.builder().id(4).tags(List.of("json", "rest")).build();
         questionRepository.saveAll(List.of(q1, q2, q3, q4));
-        List<Question> res1 = questionRepository.findByAllTags(new String[] { "java" });
+        List<Question> res1 = questionRepository.findByTags(new String[] { "java" });
         Assert.assertEquals(3, res1.size());
-        List<Question> res2 = questionRepository.findByAllTags(new String[] { "mongo", "java" });
+        List<Question> res2 = questionRepository.findByTags(new String[] { "mongo", "java" });
         Assert.assertEquals(2, res2.size());
-        List<Question> res3 = questionRepository.findByAllTags(new String[] { "java", "mongo", "spring" });
+        List<Question> res3 = questionRepository.findByTags(new String[] { "java", "mongo", "spring" });
         Assert.assertEquals(1, res3.size());
     }
 }

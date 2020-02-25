@@ -1,7 +1,6 @@
 package com.github.arakorno.stackapi.config;
 
 import com.github.arakorno.stackapi.exception.InternalServerException;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +25,7 @@ public class AppConfig {
     @Bean
     @ConfigurationProperties(prefix = "rest.connect")
     public ClientHttpRequestFactory httpRequestFactory() {
-        return new SimpleClientHttpRequestFactory();
+        return new HttpComponentsClientHttpRequestFactory();
     }
 
     @Bean
@@ -37,7 +36,7 @@ public class AppConfig {
             }
 
             public void handleError(ClientHttpResponse response) throws IOException {
-                String error = format("itnvalid response received - status: %d", response.getStatusCode().value());
+                String error = format("invalid response received - status: %d", response.getStatusCode().value());
                 try {
                     error += String.format(", message: %s",
                             IOUtils.toString(response.getBody(), StandardCharsets.UTF_8));

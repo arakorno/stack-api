@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 public interface StackexchangeApiService {
+    String API_ERROR_MESSAGE = "Failed to get data";
     String QUESTION_URL = "/questions/featured";
     String USER_DETAILS_URL = "/users/{userId}";
 
@@ -17,5 +18,5 @@ public interface StackexchangeApiService {
 
     QuestionModel getQuestions();
 
-    UserModel getUserDetails(Integer userId);
+    UserModel getUsers(Integer userId);
 }

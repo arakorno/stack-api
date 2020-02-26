@@ -1,6 +1,6 @@
 package com.github.arakorno.stackapi.config;
 
-import com.github.arakorno.stackapi.exception.InternalServerException;
+import com.github.arakorno.stackapi.exception.StackexchangeApiException;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -43,7 +43,7 @@ public class AppConfig {
                 } catch (Exception e) {
                     log.error("Failed to get response message", e);
                 }
-                throw new InternalServerException(error);
+                throw new StackexchangeApiException(error);
             }
         };
 

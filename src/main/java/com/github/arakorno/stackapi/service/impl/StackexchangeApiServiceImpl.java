@@ -1,13 +1,11 @@
 package com.github.arakorno.stackapi.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.arakorno.stackapi.exception.InternalServerException;
+import com.github.arakorno.stackapi.exception.StackexchangeApiException;
 import com.github.arakorno.stackapi.model.QuestionModel;
 import com.github.arakorno.stackapi.model.UserModel;
 import com.github.arakorno.stackapi.service.StackexchangeApiService;
+import com.github.arakorno.stackapi.utill.JsonLogUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -20,11 +18,9 @@ import java.util.Optional;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
-@Log4j2
 @Service
 @RequiredArgsConstructor
 public class StackexchangeApiServiceImpl implements StackexchangeApiService {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
     @Value("${api.stackexchange.url}")
     private String apiStackexchangeUrl;
     private final RestTemplate restTemplate;
@@ -37,28 +33,18 @@ public class StackexchangeApiServiceImpl implements StackexchangeApiService {
         return Optional
                 .ofNullable(restTemplate
                         .exchange(uri, HttpMethod.GET, new HttpEntity(getHeaders()), QuestionModel.class).getBody())
-                .map(this::logJson).filter(c -> Objects.nonNull(c.getQuestionItems()))
-                .orElseThrow(() -> new InternalServerException("Failed to get data"));
+                .map(JsonLogUtils::logJson).filter(c -> Objects.nonNull(c.getQuestionItems()))
+                .orElseThrow(() -> new StackexchangeApiException(API_ERROR_MESSAGE));
     }
 
     @Override
-    public UserModel getUserDetails(Integer userId) {
+    public UserModel getUsers(Integer userId) {
         URI uri = fromHttpUrl(apiStackexchangeUrl + USER_DETAILS_URL).queryParam("site", "stackoverflow")
                 .buildAndExpand(userId).toUri();
         return Optional
                 .ofNullable(restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getHeaders()), UserModel.class)
                         .getBody())
-                .map(this::logJson).filter(c -> Objects.nonNull(c.getUserItems()))
-                .orElseThrow(() -> new InternalServerException("Failed to get data"));
-    }
-
-    private <T> T logJson(T response) {
-        try {
-            log.debug(MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(response));
-            return response;
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
-            throw new InternalServerException(e.getMessage());
-        }
+                .map(JsonLogUtils::logJson).filter(c -> Objects.nonNull(c.getUserItems()))
+                .orElseThrow(() -> new StackexchangeApiException(API_ERROR_MESSAGE));
     }
 }

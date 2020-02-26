@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<swagger-version>2.9.2</swagger-version>
-		<jacoco.percentage.instruction>0.5</jacoco.percentage.instruction>
+		<jacoco.percentage.instruction>0.8</jacoco.percentage.instruction>
 	</properties>
 
 	<dependencies>
@@ -134,7 +134,10 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>**/**IT.java</exclude>
+							<exclude>com/github/arakorno/stackapi/StackApiApplication.class</exclude>
+							<exclude>**/controller/*Controller.class</exclude>
+							<exclude>**/config/*.class</exclude>
+							<exclude>**/**IT.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

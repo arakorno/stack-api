@@ -13,6 +13,7 @@ import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.CacheManager;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,7 +37,17 @@ public class AbstractIntTest {
     @Autowired
     protected MockMvc mockMvc;
     protected static final String QUESTIONS_PATH = "/questions";
+    protected static final String USERS_PATH = "/users";
     protected static ClientAndServer API_STACK_SERVER;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void before() {
+        cacheManager.getCacheNames().forEach(n -> cacheManager.getCache(n).clear());
+        API_STACK_SERVER.reset();
+    }
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -51,11 +62,6 @@ public class AbstractIntTest {
     @AfterClass
     public static void afterClass() {
         API_STACK_SERVER.stop();
-    }
-
-    @Before
-    public void before() {
-        API_STACK_SERVER.reset();
     }
 
     protected static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()

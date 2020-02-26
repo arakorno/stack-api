@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Cacheable(value = "userDetails", cacheManager = "cacheManager")
     public User getUserDetails(Integer userId) {
-        UserModel userModel = stackexchangeApiService.getUserDetails(userId);
+        UserModel userModel = stackexchangeApiService.getUsers(userId);
         return userModel.getUserItems().stream().findFirst().map(User::of)
                 .orElseThrow(() -> new UserNotFoundException(format("User with id %d not found!", userId)));
     }

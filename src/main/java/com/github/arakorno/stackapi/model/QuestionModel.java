@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionModel implements BaseModel {
     @JsonProperty("items")
-    private List<QuestionItem> questionItems;
+    private List<QuestionItem> questionItems = new ArrayList<>();
 
     @Data
     @Builder

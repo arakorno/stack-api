@@ -13,7 +13,7 @@ import java.util.List;
 
 @DataMongoTest
 @RunWith(SpringRunner.class)
-public class QuestionRepositoryTest {
+public class QuestionRepositoryIT {
 
     @Autowired
     private QuestionRepository questionRepository;

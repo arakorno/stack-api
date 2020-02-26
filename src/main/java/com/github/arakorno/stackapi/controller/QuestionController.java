@@ -2,17 +2,17 @@ package com.github.arakorno.stackapi.controller;
 
 import com.github.arakorno.stackapi.entity.Question;
 import com.github.arakorno.stackapi.service.QuestionService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
-@RequiredArgsConstructor
 public class QuestionController {
 
-    private final QuestionService questionService;
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping()
     public List<Question> getQuestions() {

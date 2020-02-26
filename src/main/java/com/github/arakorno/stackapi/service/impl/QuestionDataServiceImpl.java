@@ -6,17 +6,20 @@ import com.github.arakorno.stackapi.model.QuestionModel;
 import com.github.arakorno.stackapi.repository.QuestionRepository;
 import com.github.arakorno.stackapi.service.QuestionService;
 import com.github.arakorno.stackapi.service.StackexchangeApiService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+import static java.lang.String.format;
+
 @Service
-@RequiredArgsConstructor
 public class QuestionDataServiceImpl implements QuestionService {
-    private final StackexchangeApiService stackexchangeApiService;
-    private final QuestionRepository questionRepository;
+    @Autowired
+    private StackexchangeApiService stackexchangeApiService;
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @PostConstruct
     public void populateDataSource() {
@@ -34,7 +37,7 @@ public class QuestionDataServiceImpl implements QuestionService {
     @Override
     public Question getQuestion(Integer id) {
         return questionRepository.findById(id)
-                .orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found!"));
+                .orElseThrow(() -> new QuestionNotFoundException(format("Question with id %d  not found!", id)));
     }
 
     @Override

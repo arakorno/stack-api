@@ -3,13 +3,19 @@ package com.github.arakorno.stackapi.controller;
 import com.github.arakorno.stackapi.AbstractIntTest;
 import com.github.arakorno.stackapi.service.QuestionService;
 import org.junit.Test;
+import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.List;
 
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -34,9 +40,8 @@ public class QuestionControllerIT extends AbstractIntTest {
     public void testGetQuestion() throws Exception {
         final int QUESTION_ID = 60333049;
         mockMvc.perform(get(QUESTIONS_PATH + "/" + QUESTION_ID).contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].tags[2]").value("regex")).andExpect(jsonPath("$[0].isAnswered").value(false))
-                .andExpect(jsonPath("$[0].answerCount").value(0));
+                .andExpect(jsonPath("$.tags[2]").value("regex")).andExpect(jsonPath("$.isAnswered").value(false))
+                .andExpect(jsonPath("$.answerCount").value(0));
 
     }
 
@@ -57,5 +62,10 @@ public class QuestionControllerIT extends AbstractIntTest {
                 .andExpect(status().isOk());
         mockMvc.perform(get(QUESTIONS_PATH + "/" + QUESTION_ID).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
+        String mockResponse = OBJECT_MAPPER.writeValueAsString(OBJECT_MAPPER.readTree(expectedResponse.getFile()));
+        API_STACK_SERVER.when(request().withPath("/questions/featured").withMethod(HttpMethod.GET.name()))
+                .respond(response().withHeaders(new Header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+                        .withBody(mockResponse).withStatusCode(HttpStatus.OK.value()));
+        questionService.populateDataSource();
     }
 }

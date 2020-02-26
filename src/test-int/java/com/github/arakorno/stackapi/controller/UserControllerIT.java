@@ -43,7 +43,7 @@ public class UserControllerIT extends AbstractIntTest {
                 .andExpect(status().isOk()).andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.displayName").value("bunt"));
 
-        // verify when we request user details repeatedly get it from cache
+        // verify when user details are requested repeatedly get it from cache
         API_STACK_SERVER.verify(userRequest, VerificationTimes.exactly(1));
     }
 }

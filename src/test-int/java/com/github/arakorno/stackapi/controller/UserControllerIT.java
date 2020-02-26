@@ -31,19 +31,19 @@ public class UserControllerIT extends AbstractIntTest {
     public void testGetUser() throws Exception {
         final int userId = 12345;
         String mockResponse = OBJECT_MAPPER.writeValueAsString(OBJECT_MAPPER.readTree(expectedResponse.getFile()));
-        HttpRequest userRequest = request().withPath("/users/"+userId).withMethod(HttpMethod.GET.name());
+        HttpRequest userRequest = request().withPath("/users/" + userId).withMethod(HttpMethod.GET.name());
         API_STACK_SERVER.when(userRequest)
                 .respond(response().withHeaders(new Header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                         .withBody(mockResponse).withStatusCode(HttpStatus.OK.value()));
-        mockMvc.perform(get(USERS_PATH + "/"+ userId).contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value(userId))
+        mockMvc.perform(get(USERS_PATH + "/" + userId).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.displayName").value("bunt"));
 
-        mockMvc.perform(get(USERS_PATH + "/"+ userId).contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value(userId))
+        mockMvc.perform(get(USERS_PATH + "/" + userId).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.displayName").value("bunt"));
 
-        //verify when we request user details repeatedly get it from cache
+        // verify when we request user details repeatedly get it from cache
         API_STACK_SERVER.verify(userRequest, VerificationTimes.exactly(1));
     }
 }

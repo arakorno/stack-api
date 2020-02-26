@@ -61,7 +61,7 @@ public class QuestionControllerIT extends AbstractIntTest {
         mockMvc.perform(delete(QUESTIONS_PATH + "/" + QUESTION_ID).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
         mockMvc.perform(get(QUESTIONS_PATH + "/" + QUESTION_ID).contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
         String mockResponse = OBJECT_MAPPER.writeValueAsString(OBJECT_MAPPER.readTree(expectedResponse.getFile()));
         API_STACK_SERVER.when(request().withPath("/questions/featured").withMethod(HttpMethod.GET.name()))
                 .respond(response().withHeaders(new Header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))

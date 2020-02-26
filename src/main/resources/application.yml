@@ -17,3 +17,5 @@ dockerspring:
   data:
      mongodb:
         uri: mongodb://mongo:27000/test
+
+SWAGGER_BASE_PATH: /

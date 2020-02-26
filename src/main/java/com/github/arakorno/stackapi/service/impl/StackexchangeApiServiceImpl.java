@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.arakorno.stackapi.exception.InternalServerException;
 import com.github.arakorno.stackapi.model.QuestionModel;
+import com.github.arakorno.stackapi.model.UserModel;
 import com.github.arakorno.stackapi.service.StackexchangeApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,6 +38,17 @@ public class StackexchangeApiServiceImpl implements StackexchangeApiService {
                 .ofNullable(restTemplate
                         .exchange(uri, HttpMethod.GET, new HttpEntity(getHeaders()), QuestionModel.class).getBody())
                 .map(this::logJson).filter(c -> Objects.nonNull(c.getQuestionItems()))
+                .orElseThrow(() -> new InternalServerException("Failed to get data"));
+    }
+
+    @Override
+    public UserModel getUserDetails(Integer userId) {
+        URI uri = fromHttpUrl(apiStackexchangeUrl + USER_DETAILS_URL).queryParam("site", "stackoverflow")
+                .buildAndExpand(userId).toUri();
+        return Optional
+                .ofNullable(restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getHeaders()), UserModel.class)
+                        .getBody())
+                .map(this::logJson).filter(c -> Objects.nonNull(c.getUserItems()))
                 .orElseThrow(() -> new InternalServerException("Failed to get data"));
     }
 

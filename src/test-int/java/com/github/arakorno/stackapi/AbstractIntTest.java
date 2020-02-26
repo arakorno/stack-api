@@ -39,11 +39,10 @@ public class AbstractIntTest {
     protected static ClientAndServer API_STACK_SERVER;
 
     @BeforeClass
-    public static void beforeClass() throws Exception{
+    public static void beforeClass() throws Exception {
         File jsonData = new ClassPathResource("json/api_response_questions.json").getFile();
         API_STACK_SERVER = ClientAndServer.startClientAndServer(8081);
-        String mockResponse = OBJECT_MAPPER
-                .writeValueAsString(OBJECT_MAPPER.readTree(jsonData));
+        String mockResponse = OBJECT_MAPPER.writeValueAsString(OBJECT_MAPPER.readTree(jsonData));
         API_STACK_SERVER.when(request().withPath("/questions/featured").withMethod(HttpMethod.GET.name()))
                 .respond(response().withHeaders(new Header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                         .withBody(mockResponse).withStatusCode(HttpStatus.OK.value()));

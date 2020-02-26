@@ -1,0 +1,32 @@
+{
+    "items" : [
+        {
+            "badge_counts" : {
+                "bronze" : 20,
+                "silver" : 9,
+                "gold" : 1
+            },
+            "account_id" : 1414187,
+            "is_employee" : false,
+            "last_modified_date" : 1573682563,
+            "last_access_date" : 1582675759,
+            "reputation_change_year" : -341,
+            "reputation_change_quarter" : -341,
+            "reputation_change_month" : -341,
+            "reputation_change_week" : -350,
+            "reputation_change_day" : 0,
+            "reputation" : 216,
+            "creation_date" : 1334716152,
+            "user_type" : "registered",
+            "user_id" : 1340169,
+            "accept_rate" : 100,
+            "website_url" : "",
+            "link" : "https://stackoverflow.com/users/1340169/bunt",
+            "profile_image" : "https://www.gravatar.com/avatar/bf61bededbf9346fb28abda084256930?s=128&d=identicon&r=PG",
+            "display_name" : "bunt"
+        }
+    ],
+    "has_more" : false,
+    "quota_max" : 300,
+    "quota_remaining" : 272
+}

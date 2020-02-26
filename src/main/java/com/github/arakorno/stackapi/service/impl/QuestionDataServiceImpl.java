@@ -6,7 +6,7 @@ import com.github.arakorno.stackapi.model.QuestionModel;
 import com.github.arakorno.stackapi.repository.QuestionRepository;
 import com.github.arakorno.stackapi.service.QuestionService;
 import com.github.arakorno.stackapi.service.StackexchangeApiService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -15,12 +15,12 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class QuestionDataServiceImpl implements QuestionService {
-    @Autowired
-    private StackexchangeApiService stackexchangeApiService;
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final StackexchangeApiService stackexchangeApiService;
+    private final QuestionRepository questionRepository;
 
+    @Override
     @PostConstruct
     public void populateDataSource() {
         questionRepository.deleteAll();

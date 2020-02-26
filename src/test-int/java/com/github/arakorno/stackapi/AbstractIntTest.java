@@ -32,7 +32,7 @@ import static org.mockserver.model.HttpResponse.response;
 @SpringBootTest(classes = { StackApiApplication.class })
 @ActiveProfiles("test-int")
 @AutoConfigureMockMvc
-public class AbstractIntTest {
+public abstract class AbstractIntTest {
 
     @Autowired
     protected MockMvc mockMvc;

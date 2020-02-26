@@ -2,8 +2,8 @@ package com.github.arakorno.stackapi.repository;
 
 import com.github.arakorno.stackapi.entity.Question;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -13,17 +13,17 @@ import java.util.List;
 
 @DataMongoTest
 @RunWith(SpringRunner.class)
-class QuestionRepositoryTest {
+public class QuestionRepositoryTest {
 
     @Autowired
     private QuestionRepository questionRepository;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public  void setUp() {
     }
 
     @Test
-    void findByTags() {
+    public void findByTags() {
         Question q1 = Question.builder().id(1).tags(List.of("java", "mongo")).build();
         Question q2 = Question.builder().id(2).tags(List.of("spring", "mongo", "java")).build();
         Question q3 = Question.builder().id(3).tags(List.of("python", "java")).build();

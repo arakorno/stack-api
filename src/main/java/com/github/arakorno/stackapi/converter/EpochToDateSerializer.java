@@ -12,6 +12,9 @@ public class EpochToDateSerializer extends JsonDeserializer<String> {
 
     public static final SimpleDateFormat ISO_8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
+    public EpochToDateSerializer() {
+    }
+
     @Override
     public String deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
         long epoch = jsonParser.getNumberValue().longValue() * 1000;

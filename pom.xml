@@ -20,7 +20,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<swagger-version>2.9.2</swagger-version>
-		<jacoco.percentage.instruction>0.6</jacoco.percentage.instruction>
+		<jacoco.percentage.instruction>0.7</jacoco.percentage.instruction>
 	</properties>
 
 	<dependencies>
@@ -125,7 +125,7 @@
 					<append>true</append>
 					<skip>${unit.test.skip}</skip>
 					<excludes>
-						<exclude>com/github/arakorno/StackApiApplication.class</exclude>
+						<exclude>com/github/arakorno/stackapi/StackApiApplication.class</exclude>
 						<exclude>**/controller/*Controller.class</exclude>
 						<exclude>**/repository/*Repository*.class</exclude>
 						<exclude>**/config/*.class</exclude>
